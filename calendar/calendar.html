@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        #calendar-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .selection {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .tabselection {
+            margin: 0 auto;
+        }
+
+        .selrow,
+        .selcol {
+            margin: 5px;
+        }
+
+        input[type="number"] {
+            width: 80px;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        #subtn,
+        #resetbtn {
+            padding: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        #subtn:hover,
+        #resetbtn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="selection">
+        <table class="tabselection" cellspacing="10">
+            <tbody>
+                <tr class="selrow">
+                    <td class="selcol"><input id="year_get" type="number" placeholder="Year"></td>
+                    <td class="selcol"><input id="month_get" type="number" placeholder="Month"></td>
+                </tr>
+                <tr class="selrow">
+                    <td colspan="2" class="selcol"><input onclick="generate()" type="button" id="subtn" value="Generate Calendar"></td>
+                </tr>
+                <tr class="selrow">
+                    <td colspan="2" class="selcol"><input type="reset" value="Reset" id="resetbtn" onclick="location.reload();"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="calendar-container">
+        <h2 id="calendar-heading"></h2>
+        <div id="content"></div>
+    </div>
+
+    <script>
+        function generate() {
+            var year_get = document.getElementById("year_get").value;
+            var month_get = document.getElementById("month_get").value;
+            var heading = document.getElementById("calendar-heading");
+
+            if (isNaN(year_get) || isNaN(month_get) || month_get < 1 || month_get > 12) {
+                alert("Please enter valid year and month values.");
+                return;
+            }
+
+            month_get -= 1;
+            var date = new Date(year_get, month_get);
+
+            heading.innerText = "Calendar for " + date.toLocaleString('en-us', { month: 'long' }) + " " + year_get;
+
+            var init_content = "<table BORDER=1 id='calender'><tr><th>SUN</th><th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th></tr><tr>"
+            var day = date.getDay();
+            for (var i = 0; i < day; i++) {
+                init_content += "<td></td>";
+            }
+            while (date.getMonth() == month_get) {
+                init_content += "<td>" + date.getDate() + "</td>";
+                if (date.getDay() % 7 == 6) {
+                    init_content += "</tr><tr>";
+                }
+                date.setDate(date.getDate() + 1);
+            }
+
+            while (date.getDay() % 7 != 6 && date.getDay() % 7 != 0) {
+                init_content += "<td></td>";
+                date.setDate(date.getDate() + 1);
+            }
+
+            if (date.getDay() % 7 > 0) {
+                init_content += "<td></td></tr>";
+            }
+
+            init_content += "</table>"
+            document.getElementById("content").innerHTML = init_content;
+        }
+    </script>
+</body>
+
+</html>

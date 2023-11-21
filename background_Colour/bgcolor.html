@@ -1,0 +1,46 @@
+<html>
+<head>
+    <title>bgcolor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            margin: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+
+    <script>
+        var colors = ['green', 'red', 'blue', 'yellow','black'];
+        var currentColorIndex = 0;
+
+        function changeBackgroundColor() {
+            document.body.style.background = colors[currentColorIndex];
+            currentColorIndex = (currentColorIndex + 1) % colors.length;
+        }
+    </script>
+</head>
+<body>
+    <p>Change the background of this webpage</p>
+    <button id="colorBtn" onClick="changeBackgroundColor()">Change Color</button><br><br>
+</body>
+</html>
