@@ -29,7 +29,7 @@
     }
 </style>
 <body>
-    <h2>FORM VALIDATION</h2>
+    <h2>REGISTERATION</h2>
     <form name="form" action="" method="POST" onsubmit="return validateForm()">
         <table>
             <tr>
@@ -61,6 +61,7 @@
     <script>
         function validateForm() {
             var fname = document.form.fname.value;
+            var email = document.form.email.value;
             var mob = document.form.mob.value;
             var user = document.form.user.value;
             var passcode = document.form.passcode.value;
@@ -75,6 +76,17 @@
             else if(ren.test(fname)){
                 alert("Enter Valid Name !!");
                 document.form.fname.focus();
+                return false;
+            }
+
+            if (email == "") {
+            alert("Enter Email !!");
+            document.form.email.focus();
+            return false;
+            }
+            else if (!isValidEmail(email)) {
+                alert("Enter a valid Email address !!");
+                document.form.email.focus();
                 return false;
             }
 
@@ -101,6 +113,11 @@
                 alert("Enter minimum 8 digit Password !!" + '\n' + "Atleast one Lowercase & uppercase & digti & special charecter must be included");
                 document.form.passcode.focus();
                 return false;
+            }
+
+            function isValidEmail(email) {
+                var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
             }
 
         }
